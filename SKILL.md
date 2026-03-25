@@ -1,6 +1,6 @@
 ---
 name: Know Your People
-description: Personal relationship system — track people you know, how close you are, interaction history, birthdays, and who's open to introductions. Use when adding or updating contacts, logging interactions, asking about someone, or managing personal/professional relationships.
+description: Private people intelligence — track who you know, what they're good at, and who should meet who. Built for finding the right person at the right time. Use when adding contacts, logging interactions, searching your network by skill or interest, or drafting introductions.
 metadata: {"clawdbot":{"emoji":"👥","os":["linux","darwin","win32"]}}
 ---
 
@@ -50,9 +50,9 @@ The enclave profile is the shareable subset of a contact file — describes the 
 
 ## Core Behavior
 - User mentions a person → check if contact exists, offer to create/update
-- Calendar event detected with contact → surface relevant notes before meeting
-- Birthday approaching → remind with context about the person
-- Create `~/contacts/` as workspace
+- User asks "who do I know in [domain/skill/location]?" → search by acumen, interests, location
+- User asks about someone → surface their file with relevant context
+- User wants to make an intro → draft it using both contact files + owner profile
 
 ## When User Mentions Someone
 - "Had coffee with Maria" → log interaction, create contact if new
@@ -98,29 +98,16 @@ Ask these as a short grouped follow-up (not one by one). Skip any that were alre
 - Recent interactions at top — most relevant for context
 - Link to related contacts if group interaction
 
-## Birthday System
-- Store birthday in frontmatter or consistent format
-- Daily/weekly scan for upcoming birthdays
-- Remind 3-7 days ahead — time to prepare
-- Include context: interests, gift ideas from notes
-
-## Calendar Integration
-- Before meeting: "You're meeting Alex tomorrow. Last saw him in January, discussed his startup pivot"
-- After meeting: prompt to log interaction
-- Detect recurring meetings — suggest adding contact details if sparse
-- Conference/event: remind of attendees you know
-
 ## Progressive Enhancement
-- Week 1: create contacts as they come up naturally
-- Week 2: add birthdays for close contacts
-- Month 2: review and enrich sparse contacts
-- Ongoing: capture details during conversations
+- Start by creating contacts as they come up naturally
+- Enrich over time: add acumen, interests, intro willingness as you learn more
+- Periodically review sparse contacts and fill gaps
+- Capture details during conversations — don't wait for a "data entry session"
 
 ## What To Surface Proactively
-- "Tomorrow is David's birthday" + last interaction + interests
-- "Meeting with Lisa in 2 hours" + her context + last topics
-- "Haven't talked to Mom in 3 weeks" — if user wants relationship nudges
+- "Meeting with Lisa in 2 hours" + her context + last topics discussed
 - "Alex mentioned job hunting last time" — relevant context resurfacing
+- "You haven't connected with Basel in a while" — if user wants relationship nudges
 
 ## Details Worth Remembering
 - Kids/spouse names and ages
