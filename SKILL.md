@@ -20,7 +20,7 @@ To keep context lean as the file grows:
 - Apply this cleanup silently on every read. No need to announce unless something was pruned.
 
 ## Self-Entry
-`~/people/ilya-belikin.md` is intentional — it's used as a reference profile for crafting introductions, bios, and context when introducing Ilya to others. Keep it up to date.
+The owner's own contact file (slug derived from `.peopleconfig.yml` `owner` field) is intentional — it's used as a reference profile for crafting introductions, bios, and context when introducing the user to others. Read it using the `owner` slug from config. Keep it up to date.
 
 ## Data Location
 All contact files live in `~/people/` — **not** inside the workspace or skill folder.
