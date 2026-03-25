@@ -31,30 +31,32 @@ Keeping data outside the workspace ensures it persists across skill updates and 
 `~/people/.peopleconfig.yml` is the dataset config file. Read it at the start of any session involving this skill.
 
 ```yaml
-owner: ilya-belikin       # slug of the owner's contact file (without .md)
-enclave:
-  id: null                # assigned by KYP cloud when registered
-  api_key: null           # KYP cloud API key
-  endpoint: null          # KYP cloud API endpoint
+owner: jane-smith         # slug of the owner's contact file (without .md)
+
+# Enclave is optional — only needed if you join peepsapp.ai
+enclaves: []
+endpoint: null
 ```
 
 - **`owner`** — identifies whose dataset this is. Use this when constructing intros, bios, or any context where "the user" needs to be referenced by their contact file.
-- **`enclave.*`** — KYP cloud credentials. When populated, the agent can push/pull enclave profiles and query the shared network. Until then, treat as local-only.
-- If the file doesn't exist, operate in local-only mode and offer to create it.
+- **`enclaves`** — optional. Only relevant if the user has joined a Peeps Enclave at peepsapp.ai. If empty or absent, the skill works fully in local-only mode — no network, no sync, no cloud.
+- If the file doesn't exist, operate in local-only mode and offer to create it with just the `owner` field.
 
-### Enclave Profile — What Gets Synced
-The enclave profile is the shareable subset of a contact file — describes the **person**, not your relationship with them.
+### Enclave — Optional Network Feature
+The enclave is an opt-in feature. The skill works fully without it.
 
-**Shared to enclave:** Name, pronouns, location, Acumen, Interests, Bio, Intro willingness, Notes (freeform)
-**Stays local:** Interaction history, Tags, Private Notes 🔒, Relationship/how you know them
+If the user has joined a Peeps Enclave (peepsapp.ai), the enclave allows sharing contact profiles with a trusted circle and querying across the group. All of this is optional, consensual, and revocable.
 
-### Sync Behavior
+**What gets shared to the enclave:** Name, pronouns, location, Acumen, Interests, Bio, Intro willingness, Notes (freeform)
+**Always stays local:** Private Notes 🔒, Relationship/how you know them
+
+### Sync Behavior (enclave users only)
 - **First sync:** always show all profiles for user audit before uploading anything. Store `last_sync` timestamp in `.peopleconfig.yml` after confirmation.
 - **Ongoing:** weekly by default. Two modes set by user:
   - `review` — surface changes for approval before each sync
   - `auto` — sync without review
 - **Manual push:** available on demand (e.g. after adding many contacts during active onboarding)
-- Config keys in `.peopleconfig.yml`: `enclave.sync_mode` (`review`|`auto`), `enclave.last_sync` (ISO timestamp)
+- Only run sync logic if `enclaves` list in config is non-empty and has a valid `api_key`.
 
 ## Core Behavior
 - User mentions a person → check if contact exists, offer to create/update
