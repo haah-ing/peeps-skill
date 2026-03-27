@@ -1,12 +1,12 @@
 ---
 name: Know Your People
 description: Private people intelligence — track who you know, what they're good at, and who should meet who. Built for finding the right person at the right time. Use when adding people contacts or searching your network by skill or interest, considering introductions.
-metadata: { "clawdbot": { "emoji": "👥", "os": ["linux", "darwin", "win32"] } }
+metadata: { "openclaw": { "emoji": "👥", "os": ["linux", "darwin", "win32"] } }
 ---
 
 ## Data Location
 
-All contact files live in `~/.clawbot/workspace/people/` - inside the workspace. On first use, create it: `mkdir -p ~/.clawbot/workspace/people/`
+All contact files live in `~/.openclaw/workspace/people/` - inside the workspace. On first use, create it: `mkdir -p ~/.openclaw/workspace/people/`
 
 ## Owner self-entry
 
@@ -14,7 +14,7 @@ The owner's own contact file (slug derived from `.peopleconfig.yml` `owner` fiel
 
 ## Actions File
 
-`~/.clawbot/workspace/people/actions.md` — the pending actions queue. Check this during morning briefings.
+`~/.openclaw/workspace/people/actions.md` — the pending actions queue. Check this during morning briefings.
 
 - **Catch-ups:** people `owner` wants to reconnect with. Add when he says "we should catch up with David" or similar.
 - **Introductions:** intros to facilitate. Always include a pre-generated draft intro message (using `owner` and both contact files for context). Format: `Person A → Person B — reason` followed by the intro text as a plain indented paragraph (no "Draft:" label, no quotes, no formatting).
@@ -33,7 +33,7 @@ To keep context lean as the file grows:
 
 ## Dataset Config — `.peopleconfig.yml`
 
-`~/.clawbot/workspace/people/.peopleconfig.yml` is the dataset config file. Read it at the start of any session involving this skill.
+`~/.openclaw/workspace/people/.peopleconfig.yml` is the dataset config file. Read it at the start of any session involving this skill.
 
 ```yaml
 owner: jane-smith # slug of the owner's contact file (without .md)
@@ -160,13 +160,13 @@ Examples:
 ## Folder Structure
 
 ```
-~/.clawbot/workspace/people/
+~/.openclaw/workspace/people/
 ├── maria-garcia.md
 ├── john-smith.md
 └── deceased/         # for people who have passed
 ```
 
-All contact files live directly in `~/.clawbot/workspace/people/`. Move people who passed to `deceased/`.
+All contact files live directly in `~/.openclaw/workspace/people/`. Move people who passed to `deceased/`.
 
 ## Search and Retrieval
 
@@ -174,19 +174,19 @@ Use `grep` for fast fuzzy scanning across all contact files:
 
 ```bash
 # Find anyone matching a name or keyword (case-insensitive)
-grep -ril "keyword" ~/.clawbot/workspace/people/
+grep -ril "keyword" ~/.openclaw/workspace/people/
 
 # Show matching lines with context
-grep -i "keyword" ~/.clawbot/workspace/people/*.md
+grep -i "keyword" ~/.openclaw/workspace/people/*.md
 
 # Find by company
-grep -ril "hsbc" ~/.clawbot/workspace/people/
+grep -ril "hsbc" ~/.openclaw/workspace/people/
 
 # Find open-to-intro contacts
-grep -rl "Intro willingness.*Open" ~/.clawbot/workspace/people/
+grep -rl "Intro willingness.*Open" ~/.openclaw/workspace/people/
 
 # Full text search with filename
-grep -iH "keyword" ~/.clawbot/workspace/people/*.md
+grep -iH "keyword" ~/.openclaw/workspace/people/*.md
 ```
 
 For fuzzy/approximate matching, use `grep -i` (case-insensitive) as the first pass.
