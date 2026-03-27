@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-SKILL_REPO="https://github.com/Positplace/know-your-people-skill"
-SKILL_RAW="https://raw.githubusercontent.com/Positplace/know-your-people-skill/main"
+SKILL_REPO="https://github.com/Know-Your-People/know-your-people-skill"
+SKILL_RAW="https://raw.githubusercontent.com/Know-Your-People/know-your-people-skill/main"
 SKILLS_DIR="${HOME}/.openclaw/workspace/skills/people"
 PEOPLE_DIR="${HOME}/people"
 

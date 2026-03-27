@@ -28,7 +28,7 @@ No CRM. No app. No feed. Just files and your AI agent.
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Positplace/know-your-people-skill/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Know-Your-People/know-your-people-skill/main/install.sh | bash
 ```
 
 Requires [OpenClaw](https://openclaw.ai). That's it.
