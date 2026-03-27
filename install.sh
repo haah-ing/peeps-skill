@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 SKILL_REPO="https://github.com/Know-Your-People/know-your-people-skill"
 SKILL_RAW="https://raw.githubusercontent.com/Know-Your-People/know-your-people-skill/main"
@@ -31,8 +31,12 @@ echo -e "${GREEN}✓ OpenClaw found${NC}"
 # Create skills directory
 mkdir -p "$SKILLS_DIR"
 
-# Download skill files
-echo "  Downloading skill..."
+# Download skill files (update vs first install)
+if [ -f "${SKILLS_DIR}/SKILL.md" ]; then
+  echo "  Updating skill..."
+else
+  echo "  Downloading skill..."
+fi
 
 FILES=("SKILL.md")
 
@@ -53,20 +57,29 @@ fi
 # Create .peopleconfig.yml if it doesn't exist
 CONFIG_FILE="${PEOPLE_DIR}/.peopleconfig.yml"
 if [ ! -f "$CONFIG_FILE" ]; then
-  cat > "$CONFIG_FILE" << 'EOF'
-owner: <your-contact-file-slug> # set to your contact file slug (e.g. jane-smith)
+  echo ""
+  read -r -p "  Your full name (e.g. Jane Smith): " OWNER_NAME
+  # Derive slug: lowercase, replace spaces with hyphens
+  OWNER_SLUG=$(echo "$OWNER_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9-')
+  cat > "$CONFIG_FILE" << EOF
+owner: ${OWNER_SLUG}
+enclaves: []
+endpoint: null
 EOF
-  echo -e "${GREEN}✓ Created ${CONFIG_FILE}${NC}"
+  echo -e "${GREEN}✓ Created ${CONFIG_FILE} (owner: ${OWNER_SLUG})${NC}"
+  echo -e "${YELLOW}  Remember to create your own contact file: ${PEOPLE_DIR}/${OWNER_SLUG}.md${NC}"
+else
+  echo -e "${GREEN}✓ ${CONFIG_FILE} already exists${NC}"
 fi
 
 echo ""
 echo "  ──────────────────────────────────────────"
-echo -e "  ${GREEN}All done.${NC} Start talking to your agent:"
+echo -e "  ${GREEN}All done.${NC} Start talking to your contacts:"
 echo ""
-echo '  "Add a new contact — I just met someone called Leo at a design event."'
+echo '  "Add Leo Lawrence — we just met at a design event."'
 echo '  "Who do I know in fintech in Singapore?"'
 echo '  "Draft an intro between Peter and Shaurya."'
 echo ""
-echo "  Enclave access (early): https://peepsapp.ai"
+echo "  Enclave access (early): https://peepsapp.ai/skill"
 echo "  Source: ${SKILL_REPO}"
 echo ""
