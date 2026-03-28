@@ -213,7 +213,7 @@ When the user asks "who do I know in X", construct a multi-term grep from the do
 
 ## Appendix: Dispatch
 
-Opt-in at dispatch.peepsapp.ai; Peeps works fully without it. Prefer **`GET https://api.peepsapp.ai/openapi.json`** if field names drift.
+Dispatch is optional — Peeps works fully without it. **Enrollment / early access** matches the project README: **[peepsapp.ai](https://peepsapp.ai)** (Peeps Enclave). **API base:** `https://api.peepsapp.ai`. Prefer **`GET https://api.peepsapp.ai/openapi.json`** if field names drift.
 
 ### Client policy
 
@@ -238,7 +238,7 @@ Authenticate with **one** Bearer enclave key per request. **`webhookUrl`** is op
 
 **Multi-key semantics:** one job uses one enclave key; the API does not merge keys in one call. This skill uses the **first** valid key in `enclaves` file order per outbound POST unless a future policy says otherwise.
 
-**401 / errors:** on **`invalid_api_key`**, treat keys as stale — prompt re-copy from Dispatch enrollment. On **`invalid_api_key_format`**, fix `peepsconfig.yml`.
+**401 / errors:** structured codes include e.g. **`missing_authorization`**, **`invalid_authorization_scheme`** (not `Bearer` / malformed `Authorization`), **`invalid_api_key`**, **`invalid_api_key_format`**. On **`invalid_api_key`**, treat keys as stale — prompt re-copy from enrollment (**peepsapp.ai**). On **`invalid_api_key_format`**, fix `peepsconfig.yml`.
 
 **When to call:** after local search (`peeps/`, grep + reads), if **no good match** or **only one** contact fits and a valid key exists → **POST** `https://api.peepsapp.ai` per OpenAPI with **`query`**, optional **`keywords`**, **`ownerSlug`**, Bearer auth. Response includes **`pollUrl`** and may include **`eventsUrl`**. Append jobs to **`dispatch-pending.md`** (ISO time, copy of **`query`**, store **`pollUrl`** for GET polling, optional **`eventsUrl`** for SSE, notes). Do not block the user’s turn — poll on **Heartbeat**.
 
@@ -261,7 +261,10 @@ You are the **trusted contact** for another user’s query. **Never** auto-send 
 |--------|--------|------|
 | List pending | `GET` | `https://api.peepsapp.ai/v1/dispatch/inbound/jobs?status=pending` |
 | Respond | `POST` | `https://api.peepsapp.ai/v1/dispatch/inbound/jobs/{jobId}/respond` — body `{"answer":"..."}` |
+| Decline | `POST` | `https://api.peepsapp.ai/v1/dispatch/inbound/jobs/{jobId}/decline` — optional body e.g. `{"reason":"..."}` |
 | Enqueue (upstream / tests) | `POST` | `https://api.peepsapp.ai/v1/dispatch/inbound/jobs` — e.g. `{"query":"…","requesterLabel":"…"}` |
+
+**Enqueue response:** `POST …/inbound/jobs` returns JSON shaped like `{ "job": { "id": "<uuid>", ... } }` — read **`job.id`** (not a bare top-level `id`) when wiring scripts or logs.
 
 **Quick curl (debug):** replace `KEY` / host as needed.
 
@@ -269,6 +272,7 @@ You are the **trusted contact** for another user’s query. **Never** auto-send 
 curl -sS -X POST https://api.peepsapp.ai/v1/dispatch/inbound/jobs \
   -H "Authorization: Bearer KEY" -H "Content-Type: application/json" \
   -d '{"query":"Who do you know in fintech?","requesterLabel":"Alex"}'
+# Response includes job id at .job.id
 
 curl -sS "https://api.peepsapp.ai/v1/dispatch/inbound/jobs?status=pending" \
   -H "Authorization: Bearer KEY"
@@ -276,6 +280,10 @@ curl -sS "https://api.peepsapp.ai/v1/dispatch/inbound/jobs?status=pending" \
 curl -sS -X POST "https://api.peepsapp.ai/v1/dispatch/inbound/jobs/JOB_UUID/respond" \
   -H "Authorization: Bearer KEY" -H "Content-Type: application/json" \
   -d '{"answer":"From my notes: …"}'
+
+curl -sS -X POST "https://api.peepsapp.ai/v1/dispatch/inbound/jobs/JOB_UUID/decline" \
+  -H "Authorization: Bearer KEY" -H "Content-Type: application/json" \
+  -d '{"reason":"User chose not to share"}'
 ```
 
 **Ledger:** `dispatch-inbound.md` — **ISO time**, **`jobId`**, **`query`**, **`requesterLabel`**, **status**, **draft answer**, **user decision**.
@@ -285,5 +293,5 @@ curl -sS -X POST "https://api.peepsapp.ai/v1/dispatch/inbound/jobs/JOB_UUID/resp
 1. **Fetch:** on heartbeat / Dispatch session, **`GET`** `…/inbound/jobs?status=pending` with Bearer (first valid key). Merge into the ledger; **`pending_run`** for new local work. Respect **Pending row cap**.
 2. **Run locally:** **`pending_run`** → answer from **`peeps/`** only → **`awaiting_send_confirm`** with a draft.
 3. **Ask the human:** show **`query`**, **`requesterLabel`**, draft; **send or discard?** No **`POST …/respond`** until **send** is chosen.
-4. **Terminal:** **send** → **`POST …/respond`** with `{"answer":"..."}` → remove row on success. **Discard** → remove ledger row (decline route only if OpenAPI defines one). Retry transport errors on later heartbeats until terminal outcome.
+4. **Terminal:** **send** → **`POST …/respond`** with `{"answer":"..."}` → remove row on success. **Discard** → **`POST …/inbound/jobs/{jobId}/decline`** with optional `{"reason":"..."}` so the server does not keep a pending job, then remove the ledger row. **Do not** only delete locally without **`decline`** — that orphans the job server-side. Retry transport errors on later heartbeats until terminal outcome.
 5. **Revocation:** invalid keys or revoked enrollment — stop; surface once; clear per API guidance.
