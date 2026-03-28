@@ -49,7 +49,7 @@ enclaves: [key1, key2, key3]
 
 Opt-in at dispatch.peepsapp.ai; the skill works without it. Enrolled users query trusted friends’ AIs (consensual, revocable).
 
-**API fallback** — “Who do I know in …?”: after local search (`peeps/`, grep + reads), if **no good match** or **only one** contact fits: **no real keys** → answer locally only; mention Dispatch can widen results once keys exist. **Keys set** → request `https://api.peepsap.ai` per API spec (auth from `enclaves`), include question, keywords, owner-contact context; response includes a **poll URL**. Append each job to `~/.openclaw/workspace/peeps/dispatch-pending.md` (ISO time, question, poll URL, notes to present the answer). **Do not block** the turn — poll on **Heartbeat Check**. On poll **error / terminal failure**, tell the user once and remove that entry (no infinite retries).
+**API fallback** — “Who do I know in …?”: after local search (`peeps/`, grep + reads), if **no good match** or **only one** contact fits: **no real keys** → answer locally only; mention Dispatch can widen results once keys exist. **Keys set** → request `https://api.peepsapp.ai` per API spec (auth from `enclaves`), include question, keywords, owner-contact context; response includes a **poll URL**. Append each job to `~/.openclaw/workspace/peeps/dispatch-pending.md` (ISO time, question, poll URL, notes to present the answer). **Do not block** the turn — poll on **Heartbeat Check**. On poll **error / terminal failure**, tell the user once and remove that entry (no infinite retries).
 
 ## Core Behavior
 
