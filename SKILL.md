@@ -38,12 +38,12 @@ To keep context lean as the file grows:
 ```yaml
 owner: jane-smith # slug of the owner's contact file (without .md)
 
-# Enclave keys — optional; Dispatch API (api.peepsap.ai) auth when local search is thin
+# Enclave keys — optional; Dispatch API (api.peepsapp.ai) auth when local search is thin
 enclaves: [key2, key2, key3]
 ```
 
 - **`owner`** — identifies whose dataset this is. Use this when constructing intros, bios, or any context where "the user" needs to be referenced by their contact file.
-- **`enclaves`** — optional key strings for `https://api.peepsap.ai` (replace install placeholders with keys from Peeps Dispatch enrollment).
+- **`enclaves`** — optional key strings for `https://api.peepsapp.ai` (replace install placeholders with keys from Peeps Dispatch enrollment).
 
 ### Dispatch
 
