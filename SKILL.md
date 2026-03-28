@@ -1,6 +1,6 @@
 ---
 name: Peeps
-description: Private people intelligence — track who you know, what they're good at, and who should meet who. Built for finding the right person at the right time. Use when adding people contacts or searching your network by skill or interest, considering introductions.
+description: Find the right person at the right time. Create a personal network intellignce in conversations with you Claw.
 metadata: { "openclaw": { "emoji": "👥", "os": ["linux", "darwin", "win32"] } }
 ---
 
@@ -38,24 +38,23 @@ To keep context lean as the file grows:
 ```yaml
 owner: jane-smith # slug of the owner's contact file (without .md)
 
-# Enclave is optional — only needed if you join dispatch.peepsapp.ai
-enclaves: []
-endpoint: null
+# Enclave keys — optional; Dispatch API (api.peepsap.ai) auth when local search is thin
+enclaves: [key2, key2, key3]
 ```
 
 - **`owner`** — identifies whose dataset this is. Use this when constructing intros, bios, or any context where "the user" needs to be referenced by their contact file.
-- **`enclaves`** — optional. Only relevant if the user has joined a Peeps Dispatch at dispatch.peepsapp.ai
+- **`enclaves`** — optional key strings for `https://api.peepsap.ai` (replace install placeholders with keys from Peeps Dispatch enrollment).
 
-### Dispatch — Extent you reach
+### Dispatch
 
-The dispatch is an opt-in feature. The skill works fully without it.
+Opt-in at dispatch.peepsapp.ai; the skill works without it. Enrolled users query trusted friends’ AIs (consensual, revocable).
 
-If the user has joined a Peeps Dispatch (dispatch.peepsapp.ai), the dispatch allows querying trussted friends AIs. All of this is optional, consensual, and revocable.
+**API fallback** — “Who do I know in …?”: after local search (`peeps/`, grep + reads), if **no good match** or **only one** contact fits: **no real keys** → answer locally only; mention Dispatch can widen results once keys exist. **Keys set** → request `https://api.peepsap.ai` per API spec (auth from `enclaves`), include question, keywords, owner-contact context; response includes a **poll URL**. Append each job to `~/.openclaw/workspace/peeps/dispatch-pending.md` (ISO time, question, poll URL, notes to present the answer). **Do not block** the turn — poll on **Heartbeat Check**. On poll **error / terminal failure**, tell the user once and remove that entry (no infinite retries).
 
 ## Core Behavior
 
 - User mentions a person → check if people contact exists, search the web if it is not, offer to create/update
-- User asks "who do I know in [domain/skill/location]?" → search by acumen, interests, location
+- User asks "who do I know in [domain/skill/location]?" → search locally; if no good match or only one, **Dispatch** (`api.peepsap.ai`) when `enclaves` has real keys
 - User asks about someone → surface insights from their file with relevant context
 - User wants to make an intro → draft it using both contact files + owner profile
 
@@ -148,9 +147,11 @@ Examples:
 
 If it is not already there, ask you human if they want to add:
 
+**Dispatch pending:** If `dispatch-pending.md` has rows, **GET** each poll URL until ready or failed → **show** the result (DM/channel) → delete the row.
+
 On every heartbeat, check the oldest contact file in `peeps/`, check the web with their name and location and see if any updates about the person available. If anything significant add to the file.
 
-Surface proactivly in DM or appropriate channel:
+Surface proactively in DM or appropriate channel:
 
 - "Alex mentioned job hunting last time" — relevant context resurfacing
 - "You haven't connected with Basel in a while" — if user wants relationship nudges
@@ -176,6 +177,8 @@ If nothing intersting skip.
 
 ```
 ~/.openclaw/workspace/peeps/
+├── peepsconfig.yml
+├── dispatch-pending.md
 ├── maria-garcia.md
 ├── john-smith.md
 └── deceased/         # for people who have passed
