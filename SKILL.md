@@ -49,6 +49,8 @@ enclaves: [key1, key2, key3]
 
 ### Dispatch
 
+If **`federationLive`** is `false` (default), do not present answers as live peer-network matches; use **`answerSource`** — **`stub`** means placeholder until federation is on. That matches the Peeps API contract (`packages/shared` / OpenAPI).
+
 **Create job (POST body — use these JSON keys exactly):**
 
 - **`query`** (string) — the user’s natural-language question (“Who do I know in …?”).
@@ -70,7 +72,7 @@ Authenticate with **one** Bearer enclave key per request (see multi-key semantic
 1. **Valid keys:** Use the **first** valid `[0-9a-f]{64}` entry in `enclaves` file order for each outbound POST (**Multi-key semantics** above).
 2. **Concurrency:** Do not grow the queue without bound — keep **at most 3** open rows in `dispatch-pending.md`. If at cap, skip new Dispatch API calls until a row is removed after a terminal outcome.
 3. **Polling cadence:** **No tight loops.** Only on each **Heartbeat Check**, **GET** each row’s **`pollUrl`** once (per API spec), unless using **SSE on `eventsUrl`** for that job instead. Do not spin or rapid-retry between heartbeats.
-4. **`dispatch-pending.md` rows:** **Remove a row only in a terminal state:** (a) poll returns **success** → show the result to the user (respect **stub** / **answerSource** above), then delete the row; (b) poll returns a **terminal failure** or **error that will not resolve by waiting** → tell the user **once**, then delete the row. **Do not** delete on ambiguous or transient responses — **retry on the next heartbeat** with the same single poll per row per heartbeat. No infinite retries of the same failure message.
+4. **`dispatch-pending.md` rows:** **Remove a row only in a terminal state:** (a) poll returns **success** → show the result to the user (respect **`federationLive`** / **`answerSource`** / **stub** under **Dispatch**), then delete the row; (b) poll returns a **terminal failure** or **error that will not resolve by waiting** → tell the user **once**, then delete the row. **Do not** delete on ambiguous or transient responses — **retry on the next heartbeat** with the same single poll per row per heartbeat. No infinite retries of the same failure message.
 
 **Inbound Dispatch (responder — you are the trusted contact)**  
 When another user’s query is routed to **this** user’s Peeps dataset (consensual enrollment on both sides), **you are the responder**. The API delivers inbound work; the skill must **never** auto-send derived contact data without **explicit user approval**.
