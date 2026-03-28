@@ -146,7 +146,7 @@ If it is not already there, ask your human if they want to add:
 
 **Dispatch (outbound + inbound):** Follow **Appendix: Dispatch** — one poll/fetch pass per heartbeat; row removal only as specified there.
 
-On every heartbeat, check the oldest contact file in `peeps/`, check the web with their name and location and see if any updates about the person are available. If anything significant, add to the file.
+On every heartbeat, check a random contact file in `peeps/`, check the web with their name and location and see if any updates about the person are available. If anything significant, add to the file.
 
 Surface proactively in DM or appropriate channel:
 
