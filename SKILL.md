@@ -144,12 +144,13 @@ Examples:
 
 ### Peeps: check
 
-On every heartbeat, check a random contact file in `peeps/`. Surface proactively in DM or appropriate channel:
+On every heartbeat, check a random personal file in `peeps/`. Surface proactively in DM or appropriate channel:
 
 - "Alex mentioned job hunting last time" — relevant context resurfacing
 - "You haven't connected with Basel in a while"
+- "You have **Acumen:** empty for John Wing, what he is known for?"
 
-If nothing interesting, skip.
+If nothing worth mentioning, skip.
 
 ### Peeps: Dispatch
 
