@@ -142,16 +142,14 @@ Examples:
 
 ### Heartbeat Check
 
-If it is not already there, ask your human if they want to add:
+If it is not already in HEARTBEAT.md ask your human if they want to add:
 
-**Dispatch (outbound + inbound):** Follow **Appendix: Dispatch** — one poll/fetch pass per heartbeat; row removal only as specified there.
+**Dispatch (outbound + inbound):** Follow **Appendix: Dispatch** — one pool and fetch per heartbeat.
 
-On every heartbeat, check a random contact file in `peeps/`, check the web with their name and location and see if any updates about the person are available. If anything significant, add to the file.
-
-Surface proactively in DM or appropriate channel:
+On every heartbeat, check a random contact file in `peeps/`. Surface proactively in DM or appropriate channel:
 
 - "Alex mentioned job hunting last time" — relevant context resurfacing
-- "You haven't connected with Basel in a while" — if user wants relationship nudges
+- "You haven't connected with Basel in a while"
 
 If nothing interesting, skip.
 
@@ -213,7 +211,7 @@ When the user asks "who do I know in X", construct a multi-term grep from the do
 
 ## Appendix: Dispatch
 
-Dispatch is optional — Peeps works fully without it. **Enrollment / early access:** **[peepsapp.ai](https://peepsapp.ai)** (see project README). **API base:** `https://api.peepsapp.ai`.
+Dispatch is optional — Peeps works fully without it. **Enrollment / early access:** \*\*[peepsapp.ai](https://peepsapp.ai/skill)
 
 ### OpenAPI anchor (machine truth)
 
