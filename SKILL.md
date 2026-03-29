@@ -351,7 +351,7 @@ Removes the request from your inbox permanently. Use when you have nothing relev
 
 ### Client policy
 
-**Local first:** always search `peeps/` (grep + reads) before any Dispatch call. Only send outbound if local search finds no good match **and** a valid key exists in `peepsconfig.yml`.
+**Local first:** always search `peeps/` before any Dispatch call. Only send outbound if local search finds no good match or user asked for it ("serach my circle" or "search my extended network" or "send to dispatach") **and** a valid key exists in `peepsconfig.yml`.
 
 **Key selection:** use the **first** valid `[0-9a-f]{64}` key from `peepsconfig.yml` `circles` list. One key per call.
 
