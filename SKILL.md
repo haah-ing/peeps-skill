@@ -211,9 +211,9 @@ grep -rl "Intro willingness.*Open" ~/.openclaw/workspace/peeps/
 - "marketing" → `marketing\|growth\|brand\|content\|seo\|ads`
 - "AI" → `ai\|machine.learning\|llm\|ml\|data.science\|nlp`
 
-When the user asks "who do I know in X", construct a multi-term grep from the domain. Use `-iH` to see what's actually in the files. Do not use `head`, get all the files.
+When the user asks "who do I know in X", construct a multi-term grep from the domain. Use `-iH` to see what's actually in the files. Do not use `head` you need to get all the mentions -- even weak matches.
 
-**After grepping, always read the full contact file(s) before answering.** Never base your answer solely on grep output — the matched snippet is a signal, not the full picture. Read the complete file to get accurate context on relationship, acumen, and any notes before surfacing someone to the user.
+**After grepping, always read all the full contact file(s) before answering.** Never base your answer solely on grep output — the matched snippet is a signal, not the full picture. Read the complete file to get accurate context on relationship, acumen, and any notes before surfacing someone to the user.
 
 ---
 
