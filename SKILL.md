@@ -215,6 +215,8 @@ grep -rl "Intro willingness.*Open" ~/.openclaw/workspace/peeps/
 
 When the user asks "who do I know in X", construct a multi-term grep from the domain. Prefer `-ril` for discovery, `-iH` when you need to see what's actually in the files.
 
+**After grepping, always read the full contact file(s) before answering.** Never base your answer solely on grep output — the matched snippet is a signal, not the full picture. Read the complete file to get accurate context on relationship, acumen, and any notes before surfacing someone to the user.
+
 ---
 
 ## Appendix: Dispatch
