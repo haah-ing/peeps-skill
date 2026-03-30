@@ -13,11 +13,18 @@ RED=$'\033[0;31m'
 BOLD=$'\033[1m'
 NC=$'\033[0m'
 
+# OSC 8 hyperlink — makes URLs clickable in iTerm2, macOS Terminal, Warp, etc.
+# Usage: $(link 'https://example.com') or $(link 'https://example.com' 'label')
+link() {
+  printf '\033]8;;%s\033\\%s\033]8;;\033\\' "$1" "${2:-$1}"
+}
+
 # Discord invite — blurple (#7289DA) → fuchsia (#EB459E) truecolor gradient on the URL
 DISCORD_URL='https://discord.gg/q3zVtnYnGY'
 print_discord_line() {
   local i len=${#DISCORD_URL} r g b p ch
   printf '  %s💬%s %sJoin the community on Discord:%s ' "$YELLOW" "$NC" "$BOLD" "$NC"
+  printf '\033]8;;%s\033\\' "$DISCORD_URL"
   for ((i = 0; i < len; i++)); do
     ch=${DISCORD_URL:i:1}
     if ((len > 1)); then
@@ -30,6 +37,7 @@ print_discord_line() {
     b=$((218 + (250 - 218) * p / 1000))
     printf $'\033[38;2;%d;%d;%dm%s' "$r" "$g" "$b" "$ch"
   done
+  printf '\033]8;;\033\\'
   printf '%s\n' "$NC"
 }
 
@@ -49,7 +57,7 @@ echo ""
 if ! command -v openclaw &> /dev/null; then
   echo -e "${RED}✗ OpenClaw not found.${NC}"
   echo ""
-  echo "  Install OpenClaw first: https://openclaw.ai"
+  echo "  Install OpenClaw first: $(link 'https://openclaw.ai')"
   echo ""
   exit 1
 fi
@@ -107,7 +115,7 @@ echo '  "Who do I know in fintech in Singapore?"'
 echo '  "Draft an intro between Peter and Shaurya."'
 echo ""
 print_discord_line
-echo "  Source: ${SKILL_REPO}"
+echo "  Source: $(link "$SKILL_REPO")"
 echo ""
 
 # Install Dispatch skill (handles circle key setup and migration from any existing peepsconfig.yml)
