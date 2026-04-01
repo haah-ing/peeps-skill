@@ -16,7 +16,7 @@ No CRM. No app. No feed. Just files and your AI agent.
 - **Drafts intros** — "connect Peter and Shaurya, they should meet"
 
 ```
-~/peeps/
+peeps/
   leo-lau.md
   peter-boeckel.md
   shaurya-srivastava.md
@@ -41,7 +41,7 @@ curl -fsSL https://raw.githubusercontent.com/Know-Your-People/peeps-skill/main/i
 
 ---
 
-## Then just talk to your contacts
+## Then just talk to your peeps
 
 ```
 "I just met someone called Leo at a design event."
