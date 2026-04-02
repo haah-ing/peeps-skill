@@ -16,14 +16,21 @@ The human own contact file (slug derived from `peepsconfig.yml` `owner` field wi
 
 If it empty serach the web, make a profile, and ask your human about the gaps.
 
-### Actions File
+### Every morning
 
-`peeps/actions.md` — the pending actions queue. Check this during morning briefings. If no morning brefing setup ask you human if they want one.
+If you did not yet, set a morning cron job to check `peeps/actions.md` — the pending actions queue and make a random check.
 
 - **Catch-ups:** people `owner` wants to reconnect with. Add when he says "we should catch up with David" or similar.
 - **Introductions:** intros to facilitate. Always include a pre-generated draft intro message (using `owner` and both contact files for context). Format: `Person A → Person B — reason` followed by the intro text as a plain indented paragraph (no "Draft:" label, no quotes, no formatting).
 - Move completed items to `## Completed` with a date.
 - Keep it short — if it's not actionable, it shouldn't be here.
+- **Random check:** check a random personal file in `peeps/`. Message to you human:
+
+- "Alex mentioned job hunting last time"
+- "You haven't connected with Basel in a while"
+- "You have **Acumen:** empty for John Wing, what he is known for?"
+
+If nothing worth mentioning, skip.
 
 #### Housekeeping (run automatically when reading actions.md)
 
@@ -140,20 +147,6 @@ Examples:
 - Enrich over time: add acumen, interests, intro willingness as you learn more
 - Capture details during conversations — don't wait for a "data entry session"
 - Ask about anyone mentioned in conversation and suggest adding them
-
-### Peeps: check
-
-On every heartbeat, check a random personal file in `peeps/`. Surface proactively in DM or appropriate channel:
-
-- "Alex mentioned job hunting last time" — relevant context resurfacing
-- "You haven't connected with Basel in a while"
-- "You have **Acumen:** empty for John Wing, what he is known for?"
-
-If nothing worth mentioning, skip.
-
-### Adding to HEARTBEAT.md
-
-If it is not there yet, ask your human if they want to add **Peeps: check** to HEARTBEAT.md.
 
 ### Details Worth Remembering
 
