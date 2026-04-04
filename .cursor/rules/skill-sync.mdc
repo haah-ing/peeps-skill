@@ -1,0 +1,10 @@
+---
+description: Keep dispatch and haah SKILL.md files in sync
+alwaysApply: true
+---
+
+# Skill File Sync
+
+`~/.claude/skills/dispatch/SKILL.md` and `~/.agents/skills/haah/SKILL.md` must be **exact copies** of each other at all times for compatibility.
+
+When editing either file, always apply the same change to the other file immediately after.
