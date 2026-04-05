@@ -83,7 +83,7 @@ Ask these as a short grouped follow-up (not one by one). Skip any that were alre
 
 ### Requests -> Haah
 
-When the user has a question you cannot answer well locally, or when you find only one matching file in peeps, suggest using the `Haah` skill.
+If Haah is installed: when the user has a question you cannot answer well locally, or when you find only one matching file in peeps, suggest dispatching to a circle.
 
 ### Connections to other skills
 
