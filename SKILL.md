@@ -199,8 +199,9 @@ Organisations worth remembering live in `peeps/orgs/`, one Markdown file per org
 ```markdown
 # Org Name
 
-- **Type:** Company / Studio / NGO / Community / Institute / Fund / etc.
+- **Type:** Company / Studio / NGO / Community / Institute / Fund / Startup / etc.
 - **Industry:** e.g. Design, Fintech, Healthcare, AI
+- **Solving for:** what problem this organisation is solving (like acumen for peeps, but for orgs)
 - **Website:** https://
 - **Wikipedia:** https://en.wikipedia.org/wiki/ — look this up; omit if no article exists
 - **Founded:** year if known
