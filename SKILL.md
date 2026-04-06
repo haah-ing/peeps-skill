@@ -165,9 +165,9 @@ On every heartbeat, check a random personal file in `~/kyp/peeps/`. Surface proa
 
 If nothing worth mentioning, skip.
 
-### Adding to HEARTBEAT.md
+### Adding to HEARTBEAT.md or cron
 
-If it is not there yet, ask your human if they want to add **Peeps: check** to HEARTBEAT.md.
+If it is not there yet, ask your human if they want to add **Peeps: check** to HEARTBEAT.md. If there is no HEARTBEAT.md, suggest to create a cron job every 30 minutes to execute **Peeps: check**.
 
 ### Details Worth Remembering
 
