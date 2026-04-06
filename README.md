@@ -58,13 +58,17 @@ hermes skills install peeps
 
 ---
 
-## Haah
+## Works best with
 
-Peeps is local by default. But we can tap into close private network intellignce with Haah network dispatch.
+Peeps is part of a suite of personal intelligence skills:
 
-**Haah lets a small circle of trusted people share their networks insights — privately and consensually** without sharing any data. When your contacts don't have the answer, theirs *might.*
+- [**Haah** 🪩](https://github.com/Know-Your-People/haah-skill) — network dispatch. When your contacts don't have the answer, Haah asks your trusted circles — privately and consensually. When a query comes in from your circle, Peeps helps you answer it.
+- [**Nooks** 📍](https://github.com/Know-Your-People/nooks-skill) — your saved places. When you're meeting someone, Nooks suggests the right spot based on your curated list of cafes, coworking spaces, and restaurants.
+- [**Pages** 📖](https://github.com/Know-Your-People/pages-skill) — your reading life. When someone recommends a book, Peeps links it to their file. When both of you have read the same book, your agent surfaces it as a connection point.
+- [**Vibes** 🎧](https://github.com/Know-Your-People/vibes-skill) — your cultural context. When you share a show, album, or podcast with someone, Peeps notes the shared taste and can surface it when drafting an intro or reconnecting.
+- [**Digs** 🔭](https://github.com/Know-Your-People/dig-skill) — your active research threads. When someone in your network has expertise matching an open dig, Peeps flags them as a potential source.
 
-→ [peepsapp.ai/haah](https://peepsapp.ai/dispatch) for early access
+Install all six and your agent knows your people, your places, your reads, your culture, and your open questions.
 
 ---
 
