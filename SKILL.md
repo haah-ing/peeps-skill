@@ -82,7 +82,7 @@ After searching the web and pre-filling what you can, ask about the gaps:
 4. **How you know them** — if not already provided
 5. **Interests** — hobbies, sports, lifestyle?
 
-If in `kyp/pages/peepsconfig.yml` images set to yes find a headhsot of a person and ad it to `kyp/assets/` use person name for a slug, write it down in **Images:** feild.
+If in `kyp/pages/peepsconfig.yml` images set to yes find a headhsot of a person and ad it to `../assets/` use person name for a slug, write it down in **Images:** feild.
 
 Ask these as a short grouped follow-up (not one by one). Skip any that were already answered in the original message.
 
@@ -108,7 +108,7 @@ If Haah is installed: when the user has a question you cannot answer well locall
 - **Pronouns:** guess, if unclear - ask
 - **Location:** from your search, otherwise ask
 - **LinkedIn:** link to LinkedIn search web for it, start with https://
-- **Image:** link to `kyp/asssets/photo-slug-usually-same-as-person-name`
+- **Image:** link to `../assets/photo-slug-usually-same-as-person-name`
 - **Website:** personal or company website if you found any, start with https://
 - **Orgs:** `[[org-slug]]`, `[[org-slug-2]]` — links to org files in `kyp/peeps/orgs/`; omit if independent/unknown
 - **How I know them:** one sentence
