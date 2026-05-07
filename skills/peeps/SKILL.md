@@ -21,24 +21,44 @@ All contact files live in a `mind/peeps/` directory. On first use, create it wit
 
 The owner's own contact file (slug derived from `peepsconfig.yml` `owner` field without `.md`) is intentional — it's used as a reference profile for crafting introductions, bios, and context when introducing the user to others.
 
-### Actions File
+### Actions
 
-`mind/peeps/actions.md` — the pending actions queue. Check this during morning briefings.
+Peeps writes to the **universal `actions.md` at workspace root**, not a peeps-scoped file. That file is shared with Pages, Vibes, and any other skill that needs scheduled or pending intents. The runtime (Haah server, local cron, or whatever the human has wired up) scans `actions.md` on a schedule and fires precise items at the right moment with a focused briefing turn.
 
-Catch-ups: people `owner` wants to reconnect with. Add when he says "we should catch up with David" or similar.
-Introductions: intros to facilitate. Always include a pre-generated draft intro message (using `owner` and both contact files for context). Format: `Person A → Person B — reason` followed by the intro text as a plain indented paragraph (no "Draft:" label, no quotes, no formatting).
-- Move completed items to `## Completed` with a date.
-- Keep it short — if it's not actionable, it shouldn't be here.
+#### Schema (universal — same shape every skill uses)
+
+```
+- [ ] <one-line description>
+  When: <date or datetime>                   (optional — omit for soft intents)
+  Who: [[<workspace-relative path>]]         (optional)
+  Notify: -<n>m | -<n>h                      (optional, defaults to -30m)
+```
+
+`When:` accepts: `2026-05-12 18:30` (interpreted in the human's heartbeat tz), `2026-05-12 18:30 HKT` (trailing label informational), `2026-05-12` (date-only — fires at wake_hour that day), or absolute ISO with `Z` / `+HH:MM`.
+
+#### What Peeps adds
+
+- **Catch-ups** with no fixed time — people the owner wants to reconnect with. Add when they say "we should catch up with David" or similar. Omit the `When:` field; these are soft intents the heartbeat surfaces opportunistically.
+- **Catch-ups with a date** — when the human commits to a specific time ("coffee with Maria next Tuesday at 6pm"). Include `When:` and `Who: [[mind/peeps/<slug>]]` so the briefing has substance. Before adding the entry, check the **Push notifications** setting (visible in the system prompt's app-configuration block). If it's off, mention that the scheduled action will only land as an in-app message — no phone alert — and suggest enabling push in the app settings. If it's on, just confirm the schedule.
+- **Introductions** — always include a pre-generated draft intro message (using `owner` and both contact files for context). Format: `Person A → Person B — reason` followed by the intro text as a plain indented paragraph (no "Draft:" label, no quotes, no formatting).
+- **Birthdays** — when you learn one, add a recurring soft intent (no `When:` — let the heartbeat surface it on the day from the contact file).
+
+Move completed items to `## Completed` with a date.
 
 #### Housekeeping (run automatically when reading actions.md)
 
 To keep context lean as the file grows:
 
-Completed items: delete after 3 days
-Completed section: rolling 7-day window — anything older than 7 days is removed
-Stale catch-ups: if a pending catch-up has been sitting for 10+ days with no update, move it to Completed as "(not pursued)" with today's date
-Pending intros: keep until explicitly marked done or cancelled — intro intent doesn't expire
+- Completed items: delete after 3 days
+- Completed section: rolling 7-day window — anything older than 7 days is removed
+- Stale soft catch-ups (no `When:`): if it's been sitting for 10+ days with no update, move to Completed as "(not pursued)" with today's date
+- Pending intros: keep until explicitly marked done or cancelled — intro intent doesn't expire
+- Items with `When:` in the past that are still unchecked: leave them. The runtime already either fired them or skipped them as stale; the human checks them off when the catch-up happens.
 - Apply this cleanup silently on every read. No need to announce.
+
+#### Legacy
+
+Older Peeps installs may still have `mind/peeps/actions.md`. If it exists, read it during heartbeat for backwards compat, but write all new entries to the root `actions.md`.
 
 ### Dataset Config — `peepsconfig.yml`
 
